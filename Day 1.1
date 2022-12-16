@@ -1,0 +1,55 @@
+
+Question - 509. Fibonacci
+
+----------------- RECURSION -----------------
+
+public:
+    int fib(int n) {
+        vector<int> dp(n+1,-1);
+        return solve(n, dp);
+    }
+    int solve(int i, vector<int> &dp){
+        if(i <= 1) return i;
+        if(dp[i] != -1) return dp[i];
+        return dp[i] = solve(i-1, dp)+solve(i-2, dp);
+    }
+};
+
+TC - O(N)
+SC - O(N) + recursion stack space.
+
+----------------- TABULATION -----------------
+
+class Solution {
+public:
+    int fib(int n) {
+        vector<int> dp(n+1,-1);
+        if(n<=1)
+            return n;
+        int dp[0] = 0;
+        int dp[1] = 1;
+        for(int i=2;i<=n;i++){
+            int dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+    }
+};
+
+----------------- Optimised -----------------
+
+class Solution {
+public:
+    int fib(int n) {
+        vector<int> dp(n+1,-1);
+        if(n<=1)
+            return n;
+        int prev2 = 0;
+        int prev = 1;
+        for(int i=2;i<=n;i++){
+            int curr = prev2 + prev;
+            prev2 = prev;
+            prev = curr;
+        }
+        return prev;
+    }
+};
